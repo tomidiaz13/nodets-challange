@@ -10,7 +10,7 @@ export class UserControllers {
     
     constructor(){};
 
-    public getUsers = async(req: Request, res: Response) => {
+    public getUsers = (req: Request, res: Response) => {
     
         // Get users list
     
@@ -59,14 +59,14 @@ export class UserControllers {
 
     };
 
-    public createUser = async(req: Request, res: Response) =>{
+    public createUser = (req: Request, res: Response) =>{
 
         // Create new user
     
         try {
         
             const {name, email, age } = req.body;
-            var ciudad = req.body
+            var ciudad = req.body.ciudad
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
             
@@ -112,7 +112,8 @@ export class UserControllers {
                 user: {
                     name,
                     email,
-                    age
+                    age,
+                    ciudad
                 }
             });;
             
@@ -126,6 +127,114 @@ export class UserControllers {
         };
     
     };
+
     
+    public updateUser = (req: Request, res: Response) =>{
+
+        // Update info details by id
+    
+        try {
+    
+            const id = +req.params.id;
+            const new_user = req.body;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            console.log(new_user.email);
+
+            if ( isNaN( id ) ) {
+                return res.status(400).json({error: `ID must be a number`});
+            }
+    
+            // Verify that the body came with all required arguments
+            if ( ! req.body.name || ! req.body.email || ! req.body.age ) {
+                return res.status(400).json({ error: `Name, email and age are required` });
+            };
+    
+            // Verify if the age or the id are not a number 
+            if ( isNaN(id) || isNaN(req.body.age) ) {
+                return res.status(400).json({ error: `Id argument or age must be a number` });
+            };
+    
+            // Verify if the user exists
+            if (! users.find( user => user.id === id ) ) {
+                return res.status(404).json({ error: `User ${ id } not found` })
+            }
+    
+            // Verify if the mail is valid
+            if (!emailRegex.test(req.body.email)){
+                return res.status(400).json({ error: `Email ${ req.body.email } is not valid` });
+            };
+    
+            // Verify if the mail is already in use
+            if ( users.find(user => user.email === req.body.email )) {
+                return res.status(400).json({ error: `Email ${ req.body.email } already exists for another user` })
+            };
+
+
+            ( req.body.ciudad )
+                ? new_user.ciudad = req.body.ciudad
+                : new_user.ciudad = null;
+
+
+            // UPDATE
+
+            users.forEach( (user, index) => {
+                if (user.id === id){
+
+                    users[index].id = id;
+                    users[index].name = new_user.name;
+                    users[index].email = new_user.email;
+                    users[index].age = new_user.age;
+                    users[index].ciudad = new_user.ciudad;
+                    
+                };
+            });
+
+            return res.status(200).json({ new_user });
+        }
+    
+        catch (error) {
+
+            return res.status(500).json({ error: `Internal Server Error` });
+
+        };
+    
+    };
+    
+    
+
+    public deleteUser = async(req: Request, res: Response) =>{
+
+        // Delete user info from the database by id
+
+        try {
+
+            const id = parseInt(req.params.id);
+
+            // Validate id is a number 
+            if ( isNaN( id ) ) {
+                return res.status(400).json({error: `ID must be a number`});
+            }
+
+            const user = users.find( user => user.id === id )
+
+            // Verify if the user exists
+            if (! user ) {
+                return res.status(404).json({ error: `User ${ id } not found` })
+            }
+
+            // Delete user
+            users.splice( users.indexOf(user), 1 );
+
+            return res.status(200).json({ user })
+
+        }
+
+        catch (error) {
+
+            return res.status(500).json({ error: `Internal Server Error` });
+
+        };
+        
+    };
 
 };  
