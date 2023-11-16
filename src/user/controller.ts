@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 
 var users = [
-    {id: 1, name: 'Tomas Diaz', email: "tdiaz@gmail.com", age: 24, ciudad: 'Córdoba'},
-    {id: 2, name: 'Alejandro Diaz', email: "adiaz@gmail.com", age: 52, ciudad: 'Córdoba'},
-    {id: 3, name: 'Karina Piñero', email: "kpinero@gmail.com", age: 51, ciudad: 'Córdoba'},
+    {id: 1, name: 'Tomas Diaz', email: "tdiaz@gmail.com", age: 24, cuty: 'Córdoba'},
+    {id: 2, name: 'Alejandro Diaz', email: "adiaz@gmail.com", age: 52, city: 'Córdoba'},
+    {id: 3, name: 'Karina Piñero', email: "kpinero@gmail.com", age: 51, city: 'Córdoba'},
 ];
 
 export class UserControllers {
@@ -66,12 +66,12 @@ export class UserControllers {
         try {
         
             const {name, email, age } = req.body;
-            var ciudad = req.body.ciudad
+            var city = req.body.city
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
             
             if (! req.body.ciudad) {
-                ciudad = null;
+                city = null;
             }
 
             // Validate required fields
@@ -103,7 +103,7 @@ export class UserControllers {
                 name: name,
                 email: email,
                 age: age,
-                ciudad: ciudad
+                city: city
             }
             users.push(new_user);
 
@@ -113,7 +113,7 @@ export class UserControllers {
                     name,
                     email,
                     age,
-                    ciudad
+                    city
                 }
             });;
             
@@ -171,8 +171,8 @@ export class UserControllers {
 
 
             ( req.body.ciudad )
-                ? new_user.ciudad = req.body.ciudad
-                : new_user.ciudad = null;
+                ? new_user.city = req.body.city
+                : new_user.city = null;
 
 
             // UPDATE
@@ -184,7 +184,7 @@ export class UserControllers {
                     users[index].name = new_user.name;
                     users[index].email = new_user.email;
                     users[index].age = new_user.age;
-                    users[index].ciudad = new_user.ciudad;
+                    users[index].city = new_user.city;
                     
                 };
             });

@@ -1,5 +1,6 @@
 import  express, { Router }  from "express";
-import path from 'path';
+import SwaggerUi from "swagger-ui-express";
+import swaggerSetup from "./docs/swagger";
 
 
 
@@ -38,6 +39,7 @@ export class Server {
         // Routes
 
         this.app.use( this.routes );
+        this.app.use("/docs/", SwaggerUi.serve, SwaggerUi.setup(swaggerSetup));
 
 
         this.app.get('*', (req, res) => {
