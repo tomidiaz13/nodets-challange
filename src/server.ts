@@ -30,6 +30,11 @@ export class Server {
     async start() {
         console.log('server running')
 
+
+        // Middlewares
+        this.app.use( express.json() ); // Serialize raw to json
+        this.app.use( express.urlencoded( {extended: true} ) ); // Allow x-www-form-urlencoded
+
         // Routes
 
         this.app.use( this.routes );
