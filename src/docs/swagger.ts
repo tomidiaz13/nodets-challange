@@ -26,9 +26,6 @@ const swaggerDefinition: OAS3Definition = {
                     age: {
                         type: "integer",
                     },
-                    city: {
-                        type: "string"
-                    },
                 },
             },
         },

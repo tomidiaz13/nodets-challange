@@ -49,7 +49,7 @@ export class UserRoutes {
          * Get track
          * @openapi
          * paths:
-         *   /users/{id}:
+         *   /api/users/{id}:
          *      get:
          *       tags:
          *         - users
@@ -94,7 +94,7 @@ export class UserRoutes {
         /**
          * Post track
          * @openapi
-         * /users:
+         * /api/users:
          *    post:
          *      tags:
          *        - users
@@ -131,7 +131,7 @@ export class UserRoutes {
         /**
          * Post track
          * @openapi
-         * /users/{id}:
+         * /api/users/{id}:
          *    put:
          *      tags:
          *        - users
@@ -178,7 +178,7 @@ export class UserRoutes {
         /**
          * Post track
          * @openapi
-         * /users/{id}:
+         * /api/users/{id}:
          *    delete:
          *      tags:
          *        - users
