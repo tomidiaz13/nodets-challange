@@ -44,7 +44,7 @@ export class Server {
 
         this.app.get('*', (req, res) => {
             console.log(req.url)
-            res.send('Ruta comodin')
+            res.send('Please read the README.md document')
         });
 
 
